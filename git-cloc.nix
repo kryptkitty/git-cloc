@@ -11,15 +11,16 @@ pkgs.writeShellApplication {
     fi
 
     TMPDIR="$(mktemp -d)"
- 
-    export LC_ALL=C
-
     # we intend to create a quoted version of TMPDIR right now so we do _not_ want
     # to quote the expansion of printf below.
     # shellcheck disable=SC2064
-    trap "rm -rf $(printf %q "$TMPDIR")" EXIT
-    git clone --sparse "$1" "$TMPDIR/g"
+    #trap "rm -rf $(printf %q "$TMPDIR")" EXIT
+ 
+    export LC_ALL=C
+
+    git clone "$1" "$TMPDIR/g"
     du -sh "$TMPDIR/g"
-    cloc "$TMPDIR/g"
+    shift
+    cloc "$TMPDIR/g/" "$@"
   '';
 }
