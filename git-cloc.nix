@@ -17,6 +17,7 @@ pkgs.writeShellApplication {
     # shellcheck disable=SC2064
     trap "rm -rf $(printf %q "$TMPDIR")" EXIT
     git clone "$1" "$TMPDIR/g"
+    du -sh "$TMPDIR/g"
     cloc "$TMPDIR/g"
   '';
 }
